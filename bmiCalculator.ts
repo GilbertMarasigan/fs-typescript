@@ -1,5 +1,3 @@
-
-
 const calculateBmi = (height: number, weight: number): string => {
     const bmi = weight / Math.pow((height / 100) , 2)
     console.log('bmi', bmi)
