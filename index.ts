@@ -1,15 +1,26 @@
 import express, { Request, Response } from 'express';
 import { calculateBmi } from './bmiCalculator';
-import { calculator } from './calculator'
+import { calculator, Operation } from './calculator';
 
 const app = express();
 
-app.post('/calculate', (req, res) => {
-    const { value1, value2, op } = req.body
+app.use(express.json());
 
-    const result = calculator(value1, value2, op);
+app.post('/calculate', (req, res) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const { value1, value2, op } = req.body;
+
+    if (!value1 || isNaN(Number(value1))) {
+        res.status(400).send({ error: '...' });
+        return;
+    }
+
+    const result = calculator(
+        Number(value1), Number(value2), op as Operation
+    );
+
     res.send({ result });
-})
+});
 
 app.get('/bmi', (req: Request, res: Response): void => {
 
@@ -26,25 +37,25 @@ app.get('/bmi', (req: Request, res: Response): void => {
         return;
     }
 
-    calculateBmi(heightInCm, weightInKg)
+    calculateBmi(heightInCm, weightInKg);
 
     res.json({
         'weight': weightInKg,
         'height': heightInCm,
         'bmi': calculateBmi(heightInCm, weightInKg)
     });
-})
+});
 
 app.get('/ping', (_req, res) => {
     res.send('pong');
-})
+});
 
 app.get('/hello', (_req, res) => {
-    res.send('Hello Full Stack!')
-})
+    res.send('Hello Full Stack!');
+});
 
 const PORT = 3003;
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-})
+    console.log(`Server running on port ${PORT}`);
+});

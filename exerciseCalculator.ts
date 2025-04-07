@@ -21,7 +21,7 @@ const parseExerciseArguments = (args: string[]): { target: number; period: numbe
     const [target, ...period] = numericArgs;
 
     return { target, period };
-}
+};
 
 const exerciseCalculator = (period: Array<number>, target: number): ExerciseCalculation => {
     const periodLength = period.length;
@@ -49,7 +49,7 @@ const exerciseCalculator = (period: Array<number>, target: number): ExerciseCalc
         target,
         average,
     };
-}
+};
 
 try {
     const { target, period } = parseExerciseArguments(process.argv.slice(2));
