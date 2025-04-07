@@ -1,4 +1,4 @@
-interface ExerciseCalculation {
+export interface ExerciseCalculation {
     periodLength: number;
     trainingDays: number;
     success: boolean;
@@ -23,7 +23,7 @@ const parseExerciseArguments = (args: string[]): { target: number; period: numbe
     return { target, period };
 };
 
-const exerciseCalculator = (period: Array<number>, target: number): ExerciseCalculation => {
+export const exerciseCalculator = (period: Array<number>, target: number): ExerciseCalculation => {
     const periodLength = period.length;
     const trainingDays = period.filter(p => p !== 0).length;
     const sum = period.reduce((acc, val) => acc + val, 0);
@@ -37,7 +37,7 @@ const exerciseCalculator = (period: Array<number>, target: number): ExerciseCalc
     } else if (rating < 3 && rating >= 2) {
         ratingDescription = 'not too bad but could be better';
     } else {
-        ratingDescription = 'needs improvement';
+        ratingDescription = 'bad';
     }
 
     return {
@@ -52,8 +52,10 @@ const exerciseCalculator = (period: Array<number>, target: number): ExerciseCalc
 };
 
 try {
-    const { target, period } = parseExerciseArguments(process.argv.slice(2));
-    console.log(exerciseCalculator(period, target));
+    if (require.main === module) {
+        const { target, period } = parseExerciseArguments(process.argv.slice(2));
+        console.log(exerciseCalculator(period, target));
+    }
 } catch (error) {
     console.error(error.message);
 }

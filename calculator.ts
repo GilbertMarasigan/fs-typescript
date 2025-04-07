@@ -15,7 +15,9 @@ export const calculator = (a: number, b: number, op: Operation): number => {
 };
 
 try {
-    console.log(calculator(1, 5, 'divide'));
+    if (require.main === module) {
+        console.log(calculator(1, 5, 'divide'));
+    }
 } catch (error: unknown) {
     let errorMesssage = 'Something went wrong: ';
     if (error instanceof Error) {
@@ -24,4 +26,3 @@ try {
     console.log(errorMesssage);
 }
 
-console.log(process.argv);

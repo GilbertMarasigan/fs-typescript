@@ -1,10 +1,47 @@
 import express, { Request, Response } from 'express';
 import { calculateBmi } from './bmiCalculator';
 import { calculator, Operation } from './calculator';
+import { exerciseCalculator } from './exerciseCalculator';
+
+
+function isArrayofNumbers(value: unknown): boolean {
+    return Array.isArray(value) && value.every(element => typeof element === 'number');
+}
+
+type ExerciseRequest = {
+    daily_exercises: number[];
+    target: number;
+};
 
 const app = express();
 
 app.use(express.json());
+
+
+app.post('/exercises', (req: Request<unknown, unknown, ExerciseRequest>, res) => {
+
+    const { daily_exercises, target } = req.body;
+
+    // availability
+    if (!target || !daily_exercises) {
+        res.status(400).send({ error: 'parameters missing' });
+        return;
+    }
+
+    // format validation
+    if (isNaN(Number(target)) || !isArrayofNumbers(daily_exercises)) {
+        res.status(400).send({ error: 'malformatted parameters' });
+        return;
+    }
+
+    // calculation
+    const result = exerciseCalculator(
+        daily_exercises, target
+    );
+
+    res.send({ result });
+
+});
 
 app.post('/calculate', (req, res) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
