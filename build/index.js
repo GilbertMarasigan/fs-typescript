@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const PORT = 3000;
-app.get('/ping', (_req, res) => {
+app.get('api/ping', (_req, res) => {
     console.log('someone pinged here');
     res.send('pong');
 });
