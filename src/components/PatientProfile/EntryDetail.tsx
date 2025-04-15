@@ -32,6 +32,7 @@ const EntryDetail = ({ entry }: { entry: Entry }) => {
                         <li key={index}>{code} {diagnoses.find(d => d.code === code)?.name}</li>
                     ))}
                 </ul>
+                <div>diagnose by {entry.specialist}</div>
             </div>);
         case "OccupationalHealthcare":
             return (<div className="entry-card">
@@ -41,6 +42,7 @@ const EntryDetail = ({ entry }: { entry: Entry }) => {
                         <li key={index}>{code} {diagnoses.find(d => d.code === code)?.name}</li>
                     ))}
                 </ul>
+                <div>diagnose by {entry.specialist}</div>
             </div>);
         case "Hospital":
             return (<div className="entry-card">
@@ -50,6 +52,7 @@ const EntryDetail = ({ entry }: { entry: Entry }) => {
                         <li key={index}>{code} {diagnoses.find(d => d.code === code)?.name}</li>
                     ))}
                 </ul>
+                <div>diagnose by {entry.specialist}</div>
             </div>);
         default:
             return assertNever(entry);
