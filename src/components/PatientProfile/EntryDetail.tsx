@@ -8,6 +8,24 @@ const assertNever = (value: never): never => {
     throw new Error(`Unhandled discriminated union member: ${JSON.stringify(value)}`);
 };
 
+// 2 - 3 red
+// 0 success
+// 1 yellow
+
+const healthRatingColor = (rating: number): string => {
+    switch (rating) {
+        case 0:
+            return 'green';
+        case 2:
+        case 3:
+            return 'red';
+        case 1:
+            return 'goldenrod';
+        default:
+            break;
+    }
+};
+
 const EntryDetail = ({ entry }: { entry: Entry }) => {
 
     const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
@@ -26,7 +44,7 @@ const EntryDetail = ({ entry }: { entry: Entry }) => {
     switch (entry.type) {
         case "HealthCheck":
             return (<div className="entry-card">
-                <div>{entry.date} <i>{entry.description}</i></div><Favorite color="success" />
+                <div>{entry.date} <i>{entry.description}</i></div><Favorite sx={{ color: healthRatingColor(entry.healthCheckRating) }} />
                 <ul>
                     {entry.diagnosisCodes?.map((code: string, index: number) => (
                         <li key={index}>{code} {diagnoses.find(d => d.code === code)?.name}</li>
