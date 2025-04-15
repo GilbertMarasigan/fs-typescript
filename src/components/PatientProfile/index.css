@@ -7,3 +7,16 @@
     background-color: #fafafa;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
+
+  .entry-detail-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.add-entry-button {
+    margin-top: 20px; /* Space between the last entry and the button */
+    display: flex;
+    justify-content: center;
+    margin-top: auto; /* Ensure the button stays at the bottom */
+}

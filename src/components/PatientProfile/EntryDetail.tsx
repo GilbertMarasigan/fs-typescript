@@ -12,7 +12,7 @@ const assertNever = (value: never): never => {
 // 0 success
 // 1 yellow
 
-const healthRatingColor = (rating: number): string => {
+const healthRatingColor = (rating: number): string | undefined => {
     switch (rating) {
         case 0:
             return 'green';

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PatientEntries from './PatientEntries';
 import patientService from '../../services/patients';
+import { Button } from '@mui/material';
 
 import { Patient } from '../../types';
 
@@ -37,6 +38,9 @@ const PatientProfile = () => {
             <p>Occupation: {patient.occupation}</p>
             <h3>entries</h3>
             <PatientEntries patientEntries={patient.entries} />
+            <Button to="/" variant="contained" color="primary">
+                Add New Entry
+            </Button>
         </div>
     );
 };
