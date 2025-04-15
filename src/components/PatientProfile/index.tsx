@@ -6,11 +6,9 @@ import patientService from '../../services/patients';
 import { Patient } from '../../types';
 
 const PatientProfile = () => {
-    console.log('patient profile');
+
     const { id } = useParams();
     const [patient, setPatient] = useState<Patient | null>(null);
-
-    console.log('id', id);
 
     useEffect(() => {
         const fetchPatient = async () => {
@@ -31,9 +29,6 @@ const PatientProfile = () => {
     if (!patient) {
         return <div>Loading patient data...</div>;
     }
-
-
-    console.log('patient.entries', patient);
 
     return (
         <div>
