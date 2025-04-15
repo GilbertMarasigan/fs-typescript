@@ -38,7 +38,7 @@ const PatientProfile = () => {
             <p>Occupation: {patient.occupation}</p>
             <h3>entries</h3>
             <PatientEntries patientEntries={patient.entries} />
-            <Button to="/" variant="contained" color="primary">
+            <Button color="primary">
                 Add New Entry
             </Button>
         </div>
