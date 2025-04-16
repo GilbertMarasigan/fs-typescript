@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PatientEntries from './PatientEntries';
 import patientService from '../../services/patients';
-import { Button } from '@mui/material';
 
 import { Patient } from '../../types';
+import EntryToggleWrapper from './EntryToggleWrapper';
 
 const PatientProfile = () => {
 
@@ -37,10 +37,8 @@ const PatientProfile = () => {
             <p>SSN: {patient.ssn}</p>
             <p>Occupation: {patient.occupation}</p>
             <h3>entries</h3>
+            <EntryToggleWrapper />
             <PatientEntries patientEntries={patient.entries} />
-            <Button color="primary">
-                Add New Entry
-            </Button>
         </div>
     );
 };
