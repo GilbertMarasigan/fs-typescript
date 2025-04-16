@@ -14,12 +14,20 @@ import {
 import { EntryWithoutId } from '../../types';
 import patientService from '../../services/patients';
 
-const HospitalEntryForm = () => {
+interface HospitalEntryFormProps {
+    onSuccess?: () => void;
+    setNotification?: (message: string) => void;
+}
+
+
+const HospitalEntryForm: React.FC<HospitalEntryFormProps> = ({
+    onSuccess,
+    setNotification
+}) => {
     const { id } = useParams<{ id: string }>();
 
     const [entryType, setEntryType] = useState<'Hospital' | 'HealthCheck' | 'OccupationalHealthcare'>('Hospital');
-
-    const [formData, setFormData] = useState({
+    const emptyForm = {
         date: '',
         specialist: '',
         diagnosisCodes: '',
@@ -30,7 +38,8 @@ const HospitalEntryForm = () => {
         employerName: '',
         sickLeaveStart: '',
         sickLeaveEnd: ''
-    });
+    };
+    const [formData, setFormData] = useState(emptyForm);
 
     const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [field]: e.target.value });
@@ -94,8 +103,13 @@ const HospitalEntryForm = () => {
         try {
             const updatedPatient = await patientService.addEntry(id, formattedEntry);
             console.log('Updated Patient:', updatedPatient);
+
+            setFormData(emptyForm);
+            setNotification?.('Entry added successfully');
+            onSuccess?.();
         } catch (error) {
             console.error('Error submitting entry:', error);
+            setNotification?.('Failed to add entry');
         }
     };
 
