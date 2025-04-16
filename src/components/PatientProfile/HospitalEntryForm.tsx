@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import {
     Box,
     Button,
@@ -11,20 +10,20 @@ import {
     InputLabel,
     FormControl
 } from '@mui/material';
-import { EntryWithoutId } from '../../types';
+import { EntryWithoutId, Patient } from '../../types';
 import patientService from '../../services/patients';
 
 interface HospitalEntryFormProps {
-    onSuccess?: () => void;
+    patientId: string;
+    onSuccess: (updatedPatient: Patient) => void;
     setNotification?: (message: string) => void;
 }
 
-
 const HospitalEntryForm: React.FC<HospitalEntryFormProps> = ({
+    patientId,
     onSuccess,
     setNotification
 }) => {
-    const { id } = useParams<{ id: string }>();
 
     const [entryType, setEntryType] = useState<'Hospital' | 'HealthCheck' | 'OccupationalHealthcare'>('Hospital');
     const emptyForm = {
@@ -48,10 +47,7 @@ const HospitalEntryForm: React.FC<HospitalEntryFormProps> = ({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!id) {
-            console.error("Patient ID not found in URL");
-            return;
-        }
+
 
         let formattedEntry: EntryWithoutId;
 
@@ -101,12 +97,12 @@ const HospitalEntryForm: React.FC<HospitalEntryFormProps> = ({
         console.log('Submitted Entry:', formattedEntry);
 
         try {
-            const updatedPatient = await patientService.addEntry(id, formattedEntry);
+            const updatedPatient = await patientService.addEntry(patientId, formattedEntry);
             console.log('Updated Patient:', updatedPatient);
 
             setFormData(emptyForm);
             setNotification?.('Entry added successfully');
-            onSuccess?.();
+            onSuccess(updatedPatient);
         } catch (error) {
             console.error('Error submitting entry:', error);
             setNotification?.('Failed to add entry');

@@ -31,14 +31,21 @@ const PatientProfile = () => {
         return <div>Loading patient data...</div>;
     }
 
+    const sortedEntries = [...patient.entries].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
     return (
         <div>
             <h2>{patient.name} {patient.gender === 'male' ? ('♂') : ('♀')}</h2>
             <p>SSN: {patient.ssn}</p>
             <p>Occupation: {patient.occupation}</p>
             <h3>entries</h3>
-            <EntryToggleWrapper />
-            <PatientEntries patientEntries={patient.entries} />
+            <EntryToggleWrapper
+                patientId={patient.id}
+                setPatient={setPatient}
+            />
+            <PatientEntries patientEntries={sortedEntries} />
         </div>
     );
 };

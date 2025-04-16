@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Box, Alert } from '@mui/material';
 import HospitalEntryForm from './HospitalEntryForm';
+import { Patient } from '../../types';
 
-const EntryToggleWrapper = () => {
+interface EntryToggleWrapperProps {
+    patientId: string;
+    setPatient: (patient: Patient) => void;
+}
+
+const EntryToggleWrapper: React.FC<EntryToggleWrapperProps> = ({ patientId, setPatient }) => {
     const [showForm, setShowForm] = useState(false);
     const [notification, setNotification] = useState<string | null>(null);
 
@@ -12,8 +18,10 @@ const EntryToggleWrapper = () => {
         setNotification(null); // clear any previous notification
     };
 
-    const handleSuccess = () => {
+    const handleSuccess = async (updatedPatient: Patient) => {
+        setPatient(updatedPatient); // update patient data
         setShowForm(false);
+        setNotification('Entry added successfully');
     };
 
     return (
@@ -35,6 +43,7 @@ const EntryToggleWrapper = () => {
             {showForm && (
                 <Box mt={2}>
                     <HospitalEntryForm
+                        patientId={patientId}
                         onSuccess={handleSuccess}
                         setNotification={setNotification}
                     />
